@@ -1,0 +1,40 @@
+<%- include('layouts/header') %>
+
+<div class="max-w-2xl mx-auto px-6 py-16">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl p-8 md:p-10 shadow-2xl relative">
+        <div class="absolute -top-10 left-10 w-20 h-20 bg-indigo-500/10 blur-xl rounded-full"></div>
+        
+        <h1 class="text-3xl font-extrabold tracking-tight mb-2">Request Architecture Data</h1>
+        <p class="text-sm text-slate-400 mb-8">Can't find a tech book? Let us know what you want to see hosted on the platform. Submissions are saved directly to MongoDB.</p>
+
+        <% if (success) { %>
+            <div class="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-xl text-sm font-medium">
+                <%= success %>
+            </div>
+        <% } %>
+
+        <form action="/contact" method="POST" class="space-y-5">
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Full Name</label>
+                <input type="text" name="name" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 text-slate-100 transition-colors">
+            </div>
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Email Address</label>
+                <input type="email" name="email" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 text-slate-100 transition-colors">
+            </div>
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Requested Book Title / Topic</label>
+                <input type="text" name="requestedBook" required placeholder="e.g., Designing Data-Intensive Applications" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 text-slate-400 placeholder-slate-600 transition-colors">
+            </div>
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Additional Specifications</label>
+                <textarea name="message" rows="4" required placeholder="Describe why this book should be added..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 text-slate-400 placeholder-slate-600 transition-colors"></textarea>
+            </div>
+            <button type="submit" class="w-full mt-4 py-4 bg-gradient-to-r from-cyan-500 to-indigo-600 rounded-xl font-bold tracking-wide hover:opacity-95 transition-opacity text-white shadow-lg shadow-indigo-600/10">
+                Transmit Request Data
+            </button>
+        </form>
+    </div>
+</div>
+
+<%- include('layouts/footer') %>

@@ -1,0 +1,156 @@
+<%- include('layouts/header') %>
+
+<div class="max-w-7xl mx-auto px-6 py-16">
+    <div class="mb-16">
+        <h1 class="text-4xl md:text-5xl font-black text-white tracking-tighter">
+            THE <span class="bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">INFINITE</span> ARCHIVE
+        </h1>
+        <p class="text-slate-400 mt-4 max-w-2xl text-lg leading-relaxed">
+            Browse our curated collection of software engineering blueprints and computational literature. All data is synchronized in real-time with our MongoDB cluster.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <% if (books.length > 0) { %>
+            <% books.forEach(book => { %>
+                <div class="group bg-[#0a0f1d] border border-slate-800/60 hover:border-cyan-500/50 rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 shadow-2xl">
+                    <div class="relative overflow-hidden aspect-[3/4]">
+                        <img src="<%= book.imageUrl %>" alt="<%= book.title %>" class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0f1d] via-transparent to-transparent opacity-60"></div>
+                    </div>
+
+                    <div class="p-6">
+                        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-400 bg-cyan-400/5 px-2 py-1 rounded border border-cyan-400/20">
+                            <%= book.category %>
+                        </span>
+                        <h3 class="text-xl font-bold text-white mt-4 line-clamp-1 group-hover:text-cyan-400 transition-colors">
+                            <%= book.title %>
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-4 font-medium">Authored by <%= book.author %></p>
+                        
+                        <div class="flex gap-3 mt-6">
+                            <a href="/book/<%= book._id %>" class="flex-grow text-center text-[10px] font-black uppercase tracking-widest py-3 bg-slate-900 text-slate-300 border border-slate-800 rounded-xl hover:bg-slate-800 transition-all">
+                                Details
+                            </a>
+                            <button onclick="openCheckoutModal('<%= book._id %>', '<%= book.title %>')" class="flex-grow text-center text-[10px] font-black uppercase tracking-widest py-3 bg-cyan-500 text-slate-950 rounded-xl hover:bg-white transition-all shadow-lg shadow-cyan-500/10">
+                                Buy Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <div class="col-span-full py-32 bg-slate-950/40 border-2 border-dashed border-slate-800 rounded-3xl text-center">
+                <p class="text-slate-500 font-mono text-sm tracking-widest uppercase">System Cache Empty // Check MongoDB Compass</p>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<div id="checkoutModal" class="fixed inset-0 bg-[#030712]/90 backdrop-blur-md z-[100] hidden items-center justify-center p-6 transition-all duration-300">
+    <div class="bg-[#0a0f1d] border border-slate-800 w-full max-w-lg rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+        
+        <div class="bg-slate-900/50 p-8 border-b border-slate-800 flex justify-between items-center">
+            <div>
+                <h2 class="text-2xl font-black text-white tracking-tight">Checkout System</h2>
+                <p class="text-xs text-slate-500 mt-1 uppercase tracking-widest" id="modalBookTitle">Initializing Transaction...</p>
+            </div>
+            <button onclick="closeCheckoutModal()" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:text-white transition-colors">&times;</button>
+        </div>
+
+        <form id="checkoutForm" onsubmit="processTransaction(event)" class="p-8 space-y-5">
+            <input type="hidden" id="modalBookId">
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Recipient Name</label>
+                    <input type="text" id="customerName" placeholder="Full Name" required class="w-full bg-[#050810] border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-500 transition-colors">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Contact Number</label>
+                    <input type="text" id="contactNumber" placeholder="+1 (555) 000-0000" required class="w-full bg-[#050810] border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-500 transition-colors">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Email for Digital Receipt</label>
+                <input type="email" id="customerEmail" placeholder="developer@system.com" required class="w-full bg-[#050810] border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-500 transition-colors">
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Physical Delivery Address</label>
+                <textarea id="address" rows="3" placeholder="Street, Building, City, Zip Code" required class="w-full bg-[#050810] border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-500 transition-colors resize-none"></textarea>
+            </div>
+
+            <button type="submit" id="submitOrderBtn" class="w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-black text-xs uppercase tracking-[0.2em] rounded-xl hover:opacity-90 transition-all shadow-xl shadow-cyan-500/10">
+                Finalize Purchase Order
+            </button>
+        </form>
+
+        <div id="statusMessage" class="hidden mx-8 mb-8 p-4 rounded-xl text-xs font-bold text-center uppercase tracking-widest"></div>
+    </div>
+</div>
+
+<script>
+    function openCheckoutModal(id, title) {
+        document.getElementById('modalBookId').value = id;
+        document.getElementById('modalBookTitle').innerText = "Purchasing: " + title;
+        const modal = document.getElementById('checkoutModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden'; // Stop scroll
+    }
+
+    function closeCheckoutModal() {
+        const modal = document.getElementById('checkoutModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = 'auto'; // Enable scroll
+        document.getElementById('checkoutForm').reset();
+        document.getElementById('statusMessage').classList.add('hidden');
+    }
+
+    async function processTransaction(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submitOrderBtn');
+        const status = document.getElementById('statusMessage');
+        
+        btn.disabled = true;
+        btn.innerText = "Connecting to Core Cluster...";
+
+        const payload = {
+            bookId: document.getElementById('modalBookId').value,
+            customerName: document.getElementById('customerName').value,
+            customerEmail: document.getElementById('customerEmail').value,
+            contactNumber: document.getElementById('contactNumber').value,
+            address: document.getElementById('address').value
+        };
+
+        try {
+            const response = await fetch('/order/buy', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                status.className = "mx-8 mb-8 p-4 rounded-xl text-xs font-bold text-center uppercase tracking-widest bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+                status.innerText = "SUCCESS: Order Logged in MongoDB";
+                status.classList.remove('hidden');
+                setTimeout(() => { closeCheckoutModal(); location.reload(); }, 2000);
+            } else {
+                throw new Error("System violation during write.");
+            }
+        } catch (err) {
+            status.className = "mx-8 mb-8 p-4 rounded-xl text-xs font-bold text-center uppercase tracking-widest bg-red-500/10 text-red-400 border border-red-500/20";
+            status.innerText = "ERROR: Data Write Interrupted";
+            status.classList.remove('hidden');
+            btn.disabled = false;
+            btn.innerText = "Retry Purchase Order";
+        }
+    }
+</script>
+
+<%- include('layouts/footer') %>

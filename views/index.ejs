@@ -1,0 +1,134 @@
+<%- include('layouts/header') %>
+
+    <div class="relative overflow-hidden border-b border-slate-800/50 bg-[#0b0f17]">
+        <div
+            class="absolute inset-0 bg-[linear-gradient(to_right,#161c2d_1px,transparent_1px),linear-gradient(to_bottom,#161c2d_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-30">
+        </div>
+
+        <!-- <div class="absolute top-[-10%] left-[50%] -translate-x-1/2 w-[600px] h-[350px] bg-cyan-500/10 blur-[140px] rounded-full pointer-events-none"></div>
+    <div class="absolute top-[20%] left-[20%] w-[300px] h-[300px] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none"></div> -->
+
+        <div class="relative max-w-5xl mx-auto px-6 pt-20 pb-20 text-center">
+            <!-- <div class="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6 animate-pulse">
+            <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full"></span>
+            <span class="text-[10px] font-bold uppercase tracking-[0.15em] text-cyan-400 font-mono">Real-Time MongoDB Catalog Sync Active</span>
+        </div> -->
+
+            <h1 class="serif-brand text-5xl md:text-7xl font-bold text-white tracking-tight mb-8 leading-tight">
+                Curating the Architectural Blueprint for <span
+                    class="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent italic">Modern
+                    Developers</span>
+            </h1>
+
+            <p class="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+                Welcome to TechShelf. Step into a highly refined archive engineered specifically for computer
+                scientists, software architects, and tech innovators looking to master core development systems.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="/books"
+                    class="w-full sm:w-auto px-8 py-4 bg-cyan-500 hover:bg-white text-slate-950 font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-cyan-500/10 transition-all duration-300 transform hover:-translate-y-0.5">
+                    Explore The Shelves
+                </a>
+                <a href="/contact"
+                    class="w-full sm:w-auto px-8 py-4 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-bold text-xs uppercase tracking-[0.2em] text-slate-300 transition-all">
+                    Propose New Title
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <section class="max-w-7xl mx-auto px-6 py-20">
+        <div
+            class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-slate-800/80 pb-6 mb-12 gap-4">
+            <div>
+                <h2 class="serif-brand text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+                    Featured Engineering Masterpieces
+                </h2>
+                <p class="text-xs text-slate-500 tracking-wide uppercase mt-1 font-mono">collection_status:
+                    curated_premium</p>
+            </div>
+            <a href="/books"
+                class="text-xs font-bold text-cyan-400 hover:text-white uppercase tracking-widest flex items-center gap-2 group transition-colors">
+                View Complete Catalog
+                <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <% if (books.length> 0) { %>
+                <% books.forEach(book=> { %>
+                    <div
+                        class="group bg-[#0f1420]/60 border border-slate-800/60 hover:border-slate-700 rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between shadow-2xl relative">
+
+                        <div
+                            class="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-slate-800 group-hover:bg-cyan-500 transition-colors">
+                        </div>
+
+                        <div>
+                            <div
+                                class="relative overflow-hidden rounded-xl mb-6 shadow-xl aspect-[4/3] border border-slate-900 bg-slate-950">
+                                <img src="<%= book.imageUrl %>" alt="<%= book.title %>"
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-[#0b0f17]/80 via-transparent to-transparent">
+                                </div>
+                            </div>
+
+                            <span
+                                class="inline-block text-[9px] font-black tracking-[0.2em] uppercase text-cyan-400 bg-cyan-400/5 border border-cyan-400/20 px-2 py-0.5 rounded">
+                                <%= book.category %>
+                            </span>
+
+                            <h3
+                                class="serif-brand text-xl font-bold text-white mt-4 line-clamp-1 group-hover:text-cyan-400 transition-colors">
+                                <%= book.title %>
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1 mb-4 font-medium italic">By <%= book.author %>
+                            </p>
+
+                            <p class="text-sm text-slate-400 line-clamp-3 leading-relaxed font-light">
+                                <%= book.description %>
+                            </p>
+                        </div>
+
+                        <a href="/book/<%= book._id %>"
+                            class="mt-8 text-center text-[10px] font-bold uppercase tracking-[0.2em] py-3.5 bg-slate-900 text-slate-300 hover:text-slate-950 border border-slate-800 hover:border-transparent rounded-xl hover:bg-cyan-500 transition-all duration-300">
+                            Examine Document
+                        </a>
+                    </div>
+                    <% }) %>
+                        <% } else { %>
+                            <div
+                                class="col-span-full py-24 bg-slate-950/20 border border-dashed border-slate-800 p-12 text-center text-slate-500 rounded-2xl font-mono text-xs tracking-widest uppercase">
+                                <i class="fa-solid fa-database-crack text-2xl text-slate-700 mb-4 block"></i>
+                                No Documents Registered inside core cluster // Insert via MongoDB Compass
+                            </div>
+                            <% } %>
+        </div>
+    </section>
+
+    <section class="border-t border-slate-900 bg-[#090d14]/60 py-16">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="space-y-1">
+                <h4 class="serif-brand text-3xl font-bold text-white">100%</h4>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Internalized Buying
+                </p>
+            </div>
+            <div class="space-y-1">
+                <h4 class="serif-brand text-3xl font-bold text-white">Direct</h4>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">MongoDB Logs</p>
+            </div>
+            <div class="space-y-1">
+                <h4 class="serif-brand text-3xl font-bold text-white">No-Ads</h4>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Clean Architecture
+                </p>
+            </div>
+            <div class="space-y-1">
+                <h4 class="serif-brand text-3xl font-bold text-white">Verified</h4>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Tech 블루프린트</p>
+            </div>
+        </div>
+    </section>
+
+    <%- include('layouts/footer') %>
