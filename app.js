@@ -32,6 +32,7 @@ app.use('/contact', require('./routes/contact'));
 app.use('/order', require('./routes/order')); 
 app.use('/admin', require('./routes/admin')); // Mounted your new administration gateway
 
+<<<<<<< HEAD
 // Server Execution Block (Smart Hybrid setup for Local + Vercel)
 if (process.env.NODE_ENV !== 'production') {
     const PORT = process.env.PORT || 3000;
@@ -45,3 +46,12 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Export the application layer for Vercel Serverless Functions
 module.exports = app;
+=======
+// Server Execution
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server executing seamlessly on port http://localhost:${PORT}`);
+});
+
+module.exports = app;
+>>>>>>> 6e30a7e59482dc8b8ce3017e3d2f3af62147a9b2
