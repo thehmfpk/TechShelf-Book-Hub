@@ -1,0 +1,187 @@
+<%- include('layouts/header') %>
+
+<div class="absolute top-40 left-10 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute bottom-40 right-10 w-96 h-96 bg-indigo-600/5 rounded-full blur-3xl pointer-events-none"></div>
+
+<div class="max-w-7xl mx-auto px-6 pt-12 pb-24 relative z-10">
+    
+    <div class="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800/80 pb-8">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                </span>
+                <span class="text-xs font-mono tracking-widest text-cyan-400 uppercase font-bold">Secure Administrative Node</span>
+            </div>
+            <h1 class="text-4xl font-black tracking-tight bg-gradient-to-r from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent">
+                Systems Core Console
+            </h1>
+        </div>
+        <div class="flex items-center gap-4 bg-slate-950/60 backdrop-blur border border-slate-800/80 px-4 py-2.5 rounded-xl">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm uppercase shadow-md shadow-indigo-950/40">
+                <%= adminUser.substring(0, 2) %>
+            </div>
+            <div>
+                <p class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Active Operator</p>
+                <p class="text-sm font-semibold text-slate-200"><%= adminUser %></p>
+            </div>
+            <a href="/admin/logout" class="ml-4 text-xs font-medium text-slate-400 hover:text-red-400 border border-slate-800 hover:border-red-500/20 bg-slate-900/40 px-3 py-1.5 rounded-lg transition-colors">
+                Sign Out
+            </a>
+        </div>
+    </div>
+
+    <div class="space-y-16">
+        
+        <section class="space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-cyan-950/50 border border-cyan-800/30 rounded-xl text-cyan-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-black tracking-tight text-slate-100">Live Purchase Logs</h2>
+                        <p class="text-xs text-slate-400">Processing client checkouts and pipeline logistics mapping</p>
+                    </div>
+                </div>
+                <span class="text-xs font-mono font-bold px-3 py-1 bg-cyan-950/50 border border-cyan-800/40 text-cyan-400 rounded-full">
+                    <%= orders.length %> Total Active Records
+                </span>
+            </div>
+
+            <% if(orders.length === 0) { %>
+                <div class="bg-slate-950/30 border border-slate-800/60 rounded-2xl p-12 text-center">
+                    <p class="text-sm text-slate-500">No client order receipts found on current data cluster nodes.</p>
+                </div>
+            <% } else { %>
+                <div class="grid grid-cols-1 gap-6">
+                    <% orders.forEach(order => { %>
+                        <div class="bg-slate-950/40 border border-slate-800/60 hover:border-slate-700/80 p-6 rounded-2xl shadow-xl transition duration-200 relative overflow-hidden group">
+                            
+                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 to-indigo-500"></div>
+                            
+                            <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
+                                
+                                <div class="space-y-3 flex-1">
+                                    <div>
+                                        <span class="text-[10px] font-mono tracking-wider font-bold text-cyan-400 uppercase bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-800/30">Target Asset Acquisition</span>
+                                        <h3 class="text-xl font-bold text-slate-100 mt-1.5 group-hover:text-cyan-400 transition-colors"><%= order.bookTitle %></h3>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                                        <div class="bg-slate-900/60 border border-slate-800/50 p-3 rounded-xl">
+                                            <span class="text-[10px] font-mono uppercase text-slate-500 block tracking-wider">Customer Contact</span>
+                                            <p class="text-sm font-bold text-slate-200 mt-0.5"><%= order.customerName %></p>
+                                            <p class="text-xs text-slate-400 truncate select-all"><%= order.customerEmail %></p>
+                                        </div>
+                                        <div class="bg-slate-900/60 border border-slate-800/50 p-3 rounded-xl">
+                                            <span class="text-[10px] font-mono uppercase text-slate-500 block tracking-wider">Telecommunication Path</span>
+                                            <p class="text-sm font-mono text-slate-300 font-semibold mt-1 select-all"><%= order.contactNumber || 'No number specified' %></p>
+                                        </div>
+                                        <div class="bg-slate-900/60 border border-slate-800/50 p-3 rounded-xl">
+                                            <span class="text-[10px] font-mono uppercase text-slate-500 block tracking-wider">System Pipeline Signatures</span>
+                                            <p class="text-[11px] font-mono text-slate-400 mt-0.5 truncate select-all">ID: <span class="text-slate-300"><%= order._id %></span></p>
+                                            <p class="text-[10px] font-mono text-slate-500 mt-0.5">Created: <%= new Date(order.createdAt).toLocaleDateString() %></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-slate-950 border border-slate-900/80 p-3.5 rounded-xl text-xs">
+                                        <span class="text-[10px] font-mono uppercase text-slate-500 block tracking-wider mb-1">Logistics Destination Delivery Address</span>
+                                        <p class="text-slate-300 font-medium leading-relaxed select-all"><%= order.address %></p>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-row lg:flex-col justify-between items-center lg:items-end gap-4 lg:text-right shrink-0 bg-slate-900/30 lg:bg-transparent p-4 lg:p-0 rounded-xl border border-slate-800/40 lg:border-none">
+                                    <div class="space-y-1">
+                                        <span class="text-[10px] font-mono text-slate-500 block uppercase tracking-wider hidden lg:block">Operational Status</span>
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono uppercase tracking-widest
+                                            <%= order.status === 'Processing' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' %>">
+                                            <span class="h-1.5 w-1.5 rounded-full <%= order.status === 'Processing' ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400' %>"></span>
+                                            <%= order.status %>
+                                        </span>
+                                    </div>
+                                    <div class="text-xs font-mono text-slate-500 text-right">
+                                        <p class="text-[10px] text-slate-600 uppercase tracking-widest">Last Modified Pipeline</p>
+                                        <p class="font-medium text-slate-400 mt-0.5"><%= new Date(order.updatedAt).toLocaleString([], {dateStyle: 'short', timeStyle: 'short'}) %></p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+        </section>
+
+        <section class="space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-indigo-950/50 border border-indigo-800/30 rounded-xl text-indigo-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-black tracking-tight text-slate-100">Library Book Proposals</h2>
+                        <p class="text-xs text-slate-400">Inbound catalog inquiries dispatched from global site contact points</p>
+                    </div>
+                </div>
+                <span class="text-xs font-mono font-bold px-3 py-1 bg-indigo-950/50 border border-indigo-800/40 text-indigo-400 rounded-full">
+                    <%= inquiries.length %> Inbound Envelopes
+                </span>
+            </div>
+
+            <% if(inquiries.length === 0) { %>
+                <div class="bg-slate-950/30 border border-slate-800/60 rounded-2xl p-12 text-center">
+                    <p class="text-sm text-slate-500">No active library entry dispatches found on catalog databases.</p>
+                </div>
+            <% } else { %>
+                <div class="grid grid-cols-1 gap-6">
+                    <% inquiries.forEach(inquiry => { %>
+                        <div class="bg-slate-950/40 border border-slate-800/60 hover:border-slate-700/80 p-6 rounded-2xl shadow-xl transition duration-200 relative overflow-hidden group">
+                            
+                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 to-purple-600"></div>
+
+                            <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-slate-900 pb-4 mb-4">
+                                <div class="space-y-1">
+                                    <span class="text-[10px] font-mono tracking-wider font-bold text-indigo-400 uppercase bg-indigo-950/40 px-2 py-0.5 rounded border border-indigo-800/30">Inbound Book Request</span>
+                                    <h3 class="text-lg font-black text-slate-100 mt-1">Requested Asset: <span class="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent"><%= inquiry.requestedBook %></span></h3>
+                                </div>
+                                <div class="text-left md:text-right text-xs font-mono text-slate-500 shrink-0">
+                                    <p class="text-slate-400 font-semibold"><%= new Date(inquiry.createdAt).toLocaleDateString() %></p>
+                                    <p class="text-slate-600 mt-0.5"><%= new Date(inquiry.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %></p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono mb-4 bg-slate-950/50 p-3 rounded-xl border border-slate-900">
+                                <div>
+                                    <span class="text-slate-600 text-[10px] uppercase tracking-wider block">Sender Dispatch Entity</span>
+                                    <span class="text-slate-200 font-bold text-sm"><%= inquiry.name %></span>
+                                    <span class="text-slate-400 block text-xs mt-0.5 select-all"><%= inquiry.email %></span>
+                                </div>
+                                <div class="sm:text-right flex flex-col justify-end sm:items-end">
+                                    <span class="text-slate-600 text-[10px] uppercase tracking-wider block">Unique Manifest Signature Token</span>
+                                    <span class="text-slate-400 font-medium select-all bg-slate-900/60 px-2 py-0.5 rounded border border-slate-800/50 inline-block mt-1"><%= inquiry._id %></span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <span class="text-slate-500 font-mono text-[10px] uppercase tracking-wider block">Communication Message Notes</span>
+                                <div class="bg-slate-950 border border-slate-900 p-4 rounded-xl text-xs text-slate-300 leading-relaxed whitespace-pre-line border-l-2 border-l-indigo-500 shadow-inner">
+                                    <%= inquiry.message %>
+                                </div>
+                            </div>
+
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+        </section>
+
+    </div>
+</div>
+
+<%- include('layouts/footer') %>

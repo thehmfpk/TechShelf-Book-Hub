@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title><%= locals.title || 'TechShelf | Core Console' %></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -13,9 +13,21 @@
             <a href="/" class="text-2xl font-black tracking-wider bg-gradient-to-r from-cyan-400 to-indigo-500 bg-clip-text text-transparent">
                 TECH<span class="text-slate-100">SHELF</span>
             </a>
-            <div class="space-x-8 font-medium">
+            <div class="space-x-8 font-medium flex items-center">
                 <a href="/" class="hover:text-cyan-400 transition-colors duration-200">Home</a>
                 <a href="/books" class="hover:text-cyan-400 transition-colors duration-200">Library</a>
+                
+                <div class="relative group">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-indigo-600 rounded-lg blur opacity-20 group-hover:opacity-60 transition duration-300"></div>
+                    
+                    <a href="/admin/login" class="relative flex items-center gap-1.5 bg-slate-950/90 border border-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-lg text-sm transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-cyan-400 group-hover:rotate-90 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                        </svg>
+                        <span>Management</span>
+                    </a>
+                </div>
+
                 <a href="/contact" class="bg-gradient-to-r from-cyan-500 to-indigo-600 px-4 py-2 rounded-lg text-white hover:opacity-90 transition-opacity">Request Book</a>
             </div>
         </div>
