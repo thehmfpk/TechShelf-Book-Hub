@@ -212,6 +212,7 @@ and indicate that server is executing seamlessly on port [http://localhost:3000]
 
 Open your favorite internet browser tool and navigate directly to [http://localhost:3000](http://localhost:3000) to interact with the finished platform.
 
+<!-- Badge Hunting: YOLO -->
 ---
 ## 📄 License
 Distributed under the MIT License. See LICENSE for more information.
